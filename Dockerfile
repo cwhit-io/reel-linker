@@ -1,31 +1,16 @@
 FROM python:3.11-slim
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    curl \
-    wget \
-    unzip \
-    gnupg \
-    ca-certificates \
-    --no-install-recommends && \
-    rm -rf /var/lib/apt/lists/*
-
-# Install Chromium and dependencies
-RUN apt-get update && apt-get install -y \
+# Install minimal system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
     chromium \
     chromium-driver \
-    libglib2.0-0 \
-    libxss1 \
-    libappindicator1 \
-    libindicator7 \
-    libgconf-2-4 \
     fonts-liberation \
+    libxss1 \
     xdg-utils \
-    --no-install-recommends && \
-    rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 # Verify installations
-RUN which chromium && which chromedriver
+RUN chromium --version && chromedriver --version
 
 # Set working directory
 WORKDIR /app
