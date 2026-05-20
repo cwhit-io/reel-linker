@@ -1,0 +1,80 @@
+{
+  "name": "Reel Link Scraper",
+  "description": "Fetches the latest reel/short links from Facebook, Instagram, and YouTube",
+  "endpoints": [
+    {
+      "name": "Get All Reels",
+      "method": "GET",
+      "path": "/api/reels",
+      "description": "Fetches reel links from all platforms (Facebook, Instagram, YouTube)",
+      "example_url": "http://localhost:5000/api/reels",
+      "response": {
+        "success": true,
+        "data": {
+          "facebook": "https://www.facebook.com/reel/...",
+          "instagram": "https://www.instagram.com/bhawkministries/reel/...",
+          "youtube": "https://www.youtube.com/shorts/..."
+        }
+      }
+    },
+    {
+      "name": "Get Facebook Reel",
+      "method": "GET",
+      "path": "/api/facebook",
+      "description": "Fetches the latest reel from Facebook",
+      "example_url": "http://localhost:5000/api/facebook",
+      "response": {
+        "success": true,
+        "platform": "facebook",
+        "url": "https://www.facebook.com/reel/..."
+      }
+    },
+    {
+      "name": "Get Instagram Reel",
+      "method": "GET",
+      "path": "/api/instagram",
+      "description": "Fetches the latest reel from Instagram",
+      "example_url": "http://localhost:5000/api/instagram",
+      "response": {
+        "success": true,
+        "platform": "instagram",
+        "url": "https://www.instagram.com/bhawkministries/reel/..."
+      }
+    },
+    {
+      "name": "Get YouTube Short",
+      "method": "GET",
+      "path": "/api/youtube",
+      "description": "Fetches the latest short from YouTube",
+      "example_url": "http://localhost:5000/api/youtube",
+      "response": {
+        "success": true,
+        "platform": "youtube",
+        "url": "https://www.youtube.com/shorts/..."
+      }
+    }
+  ],
+  "authentication": "None (Unauthenticated)",
+  "rate_limiting": "None",
+  "openai_skill_usage": {
+    "description": "To use this API with OpenAI skills, register an action with the following schema:",
+    "action_schema": {
+      "type": "object",
+      "properties": {
+        "platform": {
+          "type": "string",
+          "enum": ["all", "facebook", "instagram", "youtube"],
+          "description": "Which platform to fetch from"
+        }
+      },
+      "required": ["platform"]
+    },
+    "endpoint_mapping": {
+      "all": "GET /api/reels",
+      "facebook": "GET /api/facebook",
+      "instagram": "GET /api/instagram",
+      "youtube": "GET /api/youtube"
+    },
+    "example_prompt": "Get the latest Instagram reel"
+  }
+}
