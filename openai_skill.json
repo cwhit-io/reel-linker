@@ -1,80 +1,117 @@
 {
-  "name": "Reel Link Scraper",
-  "description": "Fetches the latest reel/short links from Facebook, Instagram, and YouTube",
-  "endpoints": [
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Reel Link Scraper",
+    "description": "Fetches the latest reel/short links from Facebook, Instagram, and YouTube",
+    "version": "v1.0.0"
+  },
+  "servers": [
     {
-      "name": "Get All Reels",
-      "method": "GET",
-      "path": "/api/reels",
-      "description": "Fetches reel links from all platforms (Facebook, Instagram, YouTube)",
-      "example_url": "http://localhost:5000/api/reels",
-      "response": {
-        "success": true,
-        "data": {
-          "facebook": "https://www.facebook.com/reel/...",
-          "instagram": "https://www.instagram.com/bhawkministries/reel/...",
-          "youtube": "https://www.youtube.com/shorts/..."
-        }
-      }
-    },
-    {
-      "name": "Get Facebook Reel",
-      "method": "GET",
-      "path": "/api/facebook",
-      "description": "Fetches the latest reel from Facebook",
-      "example_url": "http://localhost:5000/api/facebook",
-      "response": {
-        "success": true,
-        "platform": "facebook",
-        "url": "https://www.facebook.com/reel/..."
-      }
-    },
-    {
-      "name": "Get Instagram Reel",
-      "method": "GET",
-      "path": "/api/instagram",
-      "description": "Fetches the latest reel from Instagram",
-      "example_url": "http://localhost:5000/api/instagram",
-      "response": {
-        "success": true,
-        "platform": "instagram",
-        "url": "https://www.instagram.com/bhawkministries/reel/..."
-      }
-    },
-    {
-      "name": "Get YouTube Short",
-      "method": "GET",
-      "path": "/api/youtube",
-      "description": "Fetches the latest short from YouTube",
-      "example_url": "http://localhost:5000/api/youtube",
-      "response": {
-        "success": true,
-        "platform": "youtube",
-        "url": "https://www.youtube.com/shorts/..."
-      }
+      "url": "http://50.106.85.233:5000"
     }
   ],
-  "authentication": "None (Unauthenticated)",
-  "rate_limiting": "None",
-  "openai_skill_usage": {
-    "description": "To use this API with OpenAI skills, register an action with the following schema:",
-    "action_schema": {
-      "type": "object",
-      "properties": {
-        "platform": {
-          "type": "string",
-          "enum": ["all", "facebook", "instagram", "youtube"],
-          "description": "Which platform to fetch from"
+  "paths": {
+    "/api/reels": {
+      "get": {
+        "summary": "Get reel links from all platforms",
+        "description": "Fetches reel links from all platforms (Facebook, Instagram, YouTube)",
+        "operationId": "getAllReels",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "facebook": { "type": "string" },
+                        "instagram": { "type": "string" },
+                        "youtube": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
-      },
-      "required": ["platform"]
+      }
     },
-    "endpoint_mapping": {
-      "all": "GET /api/reels",
-      "facebook": "GET /api/facebook",
-      "instagram": "GET /api/instagram",
-      "youtube": "GET /api/youtube"
+    "/api/facebook": {
+      "get": {
+        "summary": "Get the latest Facebook reel",
+        "description": "Fetches the latest reel from Facebook",
+        "operationId": "getFacebookReel",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "platform": { "type": "string" },
+                    "url": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     },
-    "example_prompt": "Get the latest Instagram reel"
+    "/api/instagram": {
+      "get": {
+        "summary": "Get the latest Instagram reel",
+        "description": "Fetches the latest reel from Instagram",
+        "operationId": "getInstagramReel",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "platform": { "type": "string" },
+                    "url": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/youtube": {
+      "get": {
+        "summary": "Get the latest YouTube short",
+        "description": "Fetches the latest short from YouTube",
+        "operationId": "getYouTubeShort",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "platform": { "type": "string" },
+                    "url": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
